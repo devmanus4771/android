@@ -1,0 +1,270 @@
+Q.1] Java android program to demonstrate Registration form with validation.
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity2"
+ tools:ignore="HardcodedText">
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_centerInParent="true"
+ android:text="Registration Successful" android:textSize="18sp" />
+</RelativeLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ tools:context=".MainActivity"
+ tools:ignore="HardcodedText">
+ <EditText
+ android:id="@+id/firstName"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginStart="16dp"
+ android:layout_marginTop="16dp"
+ android:layout_marginEnd="16dp"
+ android:hint="First Name"
+ android:inputType="text" />
+ <EditText
+ android:id="@+id/lastName"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginStart="16dp"
+ android:layout_marginTop="16dp"
+ android:layout_marginEnd="16dp"
+ android:hint="Last Name"
+ android:inputType="text" />
+ <EditText
+ android:id="@+id/email"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginStart="16dp"
+ android:layout_marginTop="16dp"
+ android:layout_marginEnd="16dp"
+ android:hint="Email"
+ android:inputType="textEmailAddress" />
+ <EditText
+ android:id="@+id/password"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginStart="16dp"
+ android:layout_marginTop="16dp"
+ android:layout_marginEnd="16dp"
+ android:hint="Password"
+ android:inputType="textPassword" />
+ <LinearLayout
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginTop="8dp"
+ android:gravity="end"
+ android:orientation="horizontal">
+ <Button
+ android:id="@+id/cancelButton"
+style="@style/Widget.AppCompat.Button.Borderless" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="4dp"
+ android:text="CANCEL"
+ android:textColor="@color/colorPrimary" /> <Button
+ android:id="@+id/proceedButton"
+ android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="16dp"
+android:backgroundTint="@color/colorPrimary"
+ android:text="PROCEED"
+ android:textColor="@android:color/white" tools:ignore="ButtonStyle" />
+ </LinearLayout>
+</LinearLayout>
+package com.example.registrationformapp;
+import androidx.appcompat.app.AppCompatActivity;import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+public class MainActivity extends AppCompatActivity { // two buttons
+ Button bCancel, bProceed;
+ // four text fields
+ EditText etFirstName, etLastName, etEmail, etPassword;
+ // one boolean variable to check whether all the text fields
+ // are filled by the user, properly or not. boolean isAllFieldsChecked = false;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main); // register buttons with their proper IDs. bProceed = findViewById(R.id.proceedButton); bCancel = findViewById(R.id.cancelButton); // register all the EditText fields with their IDs.
+ etFirstName = findViewById(R.id.firstName); etLastName = findViewById(R.id.lastName); etEmail = findViewById(R.id.email);
+ etPassword = findViewById(R.id.password); // handle the PROCEED button
+ bProceed.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ // store the returned value of the dedicated function which checks
+ // whether the entered data is valid or if any fields are left blank.
+ isAllFieldsChecked = CheckAllFields(); // the boolean variable turns to be true then
+ // only the user must be proceed to the activity2
+ if (isAllFieldsChecked) {
+ Intent i = new
+Intent(MainActivity.this, MainActivity2.class); startActivity(i);
+ }
+ }
+ });
+ // if user presses the cancel button then close the
+ // application or the particular activity. bCancel.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ MainActivity.this.finish();
+ System.exit(0);
+ }
+ });
+ }
+ // function which checks all the text fields // are filled or not by the user.
+ // when user clicks on the PROCEED button
+ // this function is triggered.
+ private boolean CheckAllFields() {
+ if (etFirstName.length() == 0) {
+ etFirstName.setError("This field is required");
+ return false;
+ }
+ if (etLastName.length() == 0) {
+ etLastName.setError("This field is required");
+ return false;
+ }
+ if (etEmail.length() == 0) {
+ etEmail.setError("Email is required"); return false;
+ }
+ if (etPassword.length() == 0) {
+ etPassword.setError("Password is
+required");
+ return false;
+ } else if (etPassword.length() < 8) {
+ etPassword.setError("Password must be minimum 8 characters");
+ return false;
+ }
+ // after all validation return true.
+ return true;
+ }
+}
+
+
+-------------2nd-----------------
+
+Q.2] Write a Java Android Program to Demonstrate List View Activity with all operations Such
+as: Insert, Delete, Search
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <EditText
+ android:id="@+id/itemEditText"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter item"
+ android:layout_marginTop="16dp"
+ android:layout_marginStart="16dp"
+ android:layout_marginEnd="16dp"
+ android:layout_alignParentTop="true" />
+ <Button
+ android:id="@+id/insertButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Insert"
+ android:layout_marginTop="8dp"
+ android:layout_marginStart="16dp"
+ android:layout_below="@+id/itemEditText" />
+ <Button
+ android:id="@+id/deleteButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Delete"
+ android:layout_marginTop="8dp"
+ android:layout_toEndOf="@+id/insertButton"
+ android:layout_below="@+id/itemEditText" />
+ <Button
+ android:id="@+id/searchButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Search"
+ android:layout_marginTop="8dp"
+ android:layout_toEndOf="@+id/deleteButton"
+ android:layout_below="@+id/itemEditText" />
+ <ListView
+ android:id="@+id/itemListView"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginTop="16dp"
+ android:layout_marginStart="16dp"
+ android:layout_marginEnd="16dp"
+ android:layout_below="@+id/insertButton" />
+</RelativeLayout>
+//Java Code
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity {
+ EditText itemEditText;
+ ListView itemListView;
+ ArrayAdapter<String> itemAdapter;
+ ArrayList<String> itemList;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ itemEditText = findViewById(R.id.itemEditText);
+ itemListView = findViewById(R.id.itemListView);
+ Button insertButton = findViewById(R.id.insertButton);
+ Button deleteButton = findViewById(R.id.deleteButton);
+ Button searchButton = findViewById(R.id.searchButton);
+ itemList = new ArrayList<>();
+ itemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
+ itemListView.setAdapter(itemAdapter);
+ insertButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String newItem = itemEditText.getText().toString().trim();
+ if (!newItem.isEmpty()) {
+ itemList.add(newItem);
+ itemAdapter.notifyDataSetChanged();
+ itemEditText.setText("");
+ }
+ }
+ });
+ deleteButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String selectedItem = itemEditText.getText().toString().trim();
+ if (!selectedItem.isEmpty()) {
+ if (itemList.contains(selectedItem)) {
+ itemList.remove(selectedItem);
+ itemAdapter.notifyDataSetChanged();
+ itemEditText.setText("");
+ } else {
+ Toast.makeText(MainActivity.this, "Item not found",
+Toast.LENGTH_SHORT).show();
+ }
+ }
+ }
+ });
+ searchButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String searchString = itemEditText.getText().toString().trim();
+ if (!searchString.isEmpty()) {
+ if (itemList.contains(searchString)) {
+ Toast.makeText(MainActivity.this, "Item found", Toast.LENGTH_SHORT).show();
+ } else {
+ Toast.makeText(MainActivity.this, "Item not found",
+Toast.LENGTH_SHORT).show();
+ }
+ }
+ }
+ });
+ }
+}

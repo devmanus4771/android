@@ -1,0 +1,249 @@
+Q.1] Create an application that allows the user to enter a number in the textbox named „getnum‟.
+Check whether the number in the textbox „getnum‟ is Palindrome or not. Print the message accordingly
+in the label when the user clicks on the button „Check‟.
+First, define your layout in XML (activity_main.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:padding="16dp">
+ <EditText
+ android:id="@+id/editTextNumber"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter a number"
+ android:inputType="number" />
+ <Button
+ android:id="@+id/buttonCheck"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/editTextNumber"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="16dp"
+ android:text="Check" />
+ <TextView
+ android:id="@+id/textViewResult"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/buttonCheck"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="16dp"
+ android:text="" />
+</RelativeLayout>
+Then, in your activity class (MainActivity.java), you can implement the logic:
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText editTextNumber;
+ Button buttonCheck;
+ TextView textViewResult;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextNumber = findViewById(R.id.editTextNumber);
+ buttonCheck = findViewById(R.id.buttonCheck);
+ textViewResult = findViewById(R.id.textViewResult);
+ buttonCheck.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String inputNumber = editTextNumber.getText().toString().trim();
+ if (isPalindrome(inputNumber)) {
+ textViewResult.setText(inputNumber + " is a palindrome.");
+ } else {
+ textViewResult.setText(inputNumber + " is not a palindrome.");
+ }
+ }
+ });
+ }
+ private boolean isPalindrome(String str) {
+ int left = 0;
+ int right = str.length() - 1;
+ while (left < right) {
+ if (str.charAt(left) != str.charAt(right)) {
+ return false;
+ }
+ left++;
+ right--;
+ }
+ return true;
+ }
+}
+
+---------------------2nd ------------
+
+Q.1] Create an application that allows the user to enter a number in the textbox named „getnum‟.
+Check whether the number in the textbox „getnum‟ is Palindrome or not. Print the message accordingly
+in the label when the user clicks on the button „Check‟.
+First, define your layout in XML (activity_main.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:padding="16dp">
+ <EditText
+ android:id="@+id/editTextNumber"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter a number"
+ android:inputType="number" />
+ <Button
+ android:id="@+id/buttonCheck"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/editTextNumber"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="16dp"
+ android:text="Check" />
+ <TextView
+ android:id="@+id/textViewResult"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/buttonCheck"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="16dp"
+ android:text="" />
+</RelativeLayout>
+Then, in your activity class (MainActivity.java), you can implement the logic:
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText editTextNumber;
+ Button buttonCheck;
+ TextView textViewResult;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextNumber = findViewById(R.id.editTextNumber);
+ buttonCheck = findViewById(R.id.buttonCheck);
+ textViewResult = findViewById(R.id.textViewResult);
+ buttonCheck.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String inputNumber = editTextNumber.getText().toString().trim();
+ if (isPalindrome(inputNumber)) {
+ textViewResult.setText(inputNumber + " is a palindrome.");
+ } else {
+ textViewResult.setText(inputNumber + " is not a palindrome.");
+ }
+ }
+ });
+ }
+ private boolean isPalindrome(String str) {
+ int left = 0;
+ int right = str.length() - 1;
+ while (left < right) {
+ if (str.charAt(left) != str.charAt(right)) {
+ return false;
+ }
+ left++;
+ right--;
+ }
+ return true;
+ }
+}
+
+-----------------2nd  =-------------------
+
+Q.2) Java Android Program to perform all arithmetic Operations using Calculator.
+package com.example.calapp;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;public class MainActivity extends AppCompatActivity { private EditText editText;
+ private Button btnAdd, btnSubtract, btnMultiply, btnDivide;
+ private TextView resultTextView;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main); editText = findViewById(R.id.editText); btnAdd = findViewById(R.id.btnAdd);
+ btnSubtract = findViewById(R.id.btnSubtract); btnMultiply = findViewById(R.id.btnMultiply); btnDivide = findViewById(R.id.btnDivide); resultTextView =
+findViewById(R.id.resultTextView);
+ btnAdd.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ performOperation("+");
+ }
+ });
+ btnSubtract.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ performOperation("-");
+ }
+ });
+ btnMultiply.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ performOperation("*");
+ }
+ });
+ btnDivide.setOnClickListener(new
+View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ performOperation("/");
+ }
+ });
+ }
+ private void performOperation(String operator) { try {
+ double num =
+Double.parseDouble(editText.getText().toString()); double result = 0;
+ switch (operator) {
+ case "+":
+ // Addition
+ result = num + num;
+ break;
+ case "-":
+ // Subtraction
+ result = num - num;
+ break;
+ case "*":
+ // Multiplication
+ result = num * num;
+ break;
+ case "/":
+ // Division
+ result = num / num;
+ break;
+ }
+ resultTextView.setText("Result: " + result);
+ } catch (NumberFormatException e) {
+ resultTextView.setText("Invalid input"); }
+ }
+}
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"> <application
+ android:allowBackup="true"
+android:dataExtractionRules="@xml/data_extraction_rules"
+ android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true"
+ android:theme="@style/Theme.CalApp"
+ tools:targetApi="31">
+ <activity
+ android:name=".MainActivity"
+ android:exported="true">
+ <intent-filter>
+ <action
+android:name="android.intent.action.MAIN" />
+ <category
+android:name="android.intent.category.LAUNCHER" /> </intent-filter>
+ </activity>
+ </application>
+</manifest>

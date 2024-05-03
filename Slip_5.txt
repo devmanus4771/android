@@ -1,0 +1,148 @@
+Q.1) Java Android Program to Demonstrate Alert Dialog Box.
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Button
+ android:id="@+id/show_alert_button"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Show Alert Dialog"
+ android:layout_centerInParent="true"/>
+</RelativeLayout>
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ Button showAlertButton =
+findViewById(R.id.show_alert_button);
+ showAlertButton.setOnClickListener(new View.OnClickListener() { @Override
+ public void onClick(View v) {
+ // Create an AlertDialog Builder
+ AlertDialog.Builder alertDialogBuilder = new
+AlertDialog.Builder(MainActivity.this);
+ // Set the title and message of the dialog
+ alertDialogBuilder.setTitle("Alert Dialog");
+ alertDialogBuilder.setMessage("This is an example of an
+AlertDialog.");
+ // Add positive button and its action
+ alertDialogBuilder.setPositiveButton("OK", new
+DialogInterface.OnClickListener() {
+ @Override
+ public void onClick(DialogInterface dialog, int which) {
+ // Action to perform when OK button is clicked dialog.dismiss();
+ }
+ });
+ // Create and show the AlertDialog
+ AlertDialog alertDialog = alertDialogBuilder.create();
+ alertDialog.show();
+ }
+ });
+ } }
+
+------------------------2nd -----------------
+Q.2) Create an Android application which will ask the user to input his / her name. A message
+should display the two items concatenated in a label. Change the format of the label using
+radio buttons and check boxes for selection. The user can make the label text bold,
+underlined or italic as well as change its color. Also include buttons to display the message in
+the label, clear the text boxes as well as label. Finally exit.
+Create the layout for the activity_main.xml file.
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <EditText
+ android:id="@+id/editTextName"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter your name"/>
+ <Button
+ android:id="@+id/btnDisplay"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/editTextName"
+ android:text="Display"/>
+ <TextView
+ android:id="@+id/textViewMessage"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/btnDisplay"
+ android:layout_marginTop="16dp"/>
+ <!-- Add radio buttons and checkboxes for formatting options -->
+ <!-- Add buttons for clearing and exiting -->
+</RelativeLayout>
+Implementing the Logic in MainActivity.java
+import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
+public class MainActivity extends AppCompatActivity {
+ EditText editTextName;
+ TextView textViewMessage;
+ RadioButton radioBold, radioItalic, radioUnderline;
+ Button btnDisplay, btnClear, btnExit;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextName = findViewById(R.id.editTextName);
+ textViewMessage = findViewById(R.id.textViewMessage);
+ radioBold = findViewById(R.id.radioBold);
+ radioItalic = findViewById(R.id.radioItalic);
+ radioUnderline = findViewById(R.id.radioUnderline);
+ btnDisplay = findViewById(R.id.btnDisplay);
+ btnClear = findViewById(R.id.btnClear);
+ btnExit = findViewById(R.id.btnExit);
+ btnDisplay.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ displayMessage();
+ }
+ });
+ // Implement onClick listeners for Clear and Exit buttons
+ }
+ private void displayMessage() {
+ String name = editTextName.getText().toString();
+ String message = name;
+ // Modify the message based on selected formatting options
+ if (radioBold.isChecked()) {
+ message = "<b>" + message + "</b>";
+ }
+ if (radioItalic.isChecked()) {
+ message = "<i>" + message + "</i>";
+ }
+ if (radioUnderline.isChecked()) {
+ message = "<u>" + message + "</u>";
+ }
+ // Display the message in the TextView
+ textViewMessage.setText(Html.fromHtml(message));
+ }
+ // Implement methods to handle Clear and Exit functionalities
+btnClear.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ editTextName.setText("");
+ textViewMessage.setText("");
+ }
+});
+btnExit.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ finish(); // Close the activity
+ }
+}); }

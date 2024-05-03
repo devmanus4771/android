@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+ <EditText
+ android:id="@+id/usernameEditText"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Username"
+android:layout_margin="16dp"
+android:inputType="text"/>
+ <EditText
+ android:id="@+id/passwordEditText"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Password"
+android:layout_below="@id/usernameEditText"
+android:layout_margin="16dp"
+android:inputType="textPassword"/>
+ <Button
+ android:id="@+id/loginButton"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Login"
+android:layout_below="@id/passwordEditText"
+android:layout_margin="16dp"/>
+</RelativeLayout>
+//activity.java
+package com.example.loginform;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ private EditText usernameEditText;
+ private EditText passwordEditText;
+ private Button loginButton;
+ @Override
+protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+usernameEditText = findViewById(R.id.usernameEditText);
+ passwordEditText = findViewById(R.id.passwordEditText);
+ loginButton = findViewById(R.id.loginButton);
+ loginButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+public void onClick(View v) {
+ validateLogin();
+ }
+ });
+ }
+private void validateLogin() {
+ String username = usernameEditText.getText().toString();
+ String password = passwordEditText.getText().toString();
+ if (username.isEmpty() || password.isEmpty()) {
+ Toast.makeText(MainActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+ } else if (username.equals("admin") && password.equals("password")) { Toast.makeText(MainActivity.this, "Login successful",
+Toast.LENGTH_SHORT).show();
+ // You can add code here to navigate to another activity
+ } else {
+ Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+ }
+ }
+}
+
+
+-----------------------2nd -----------------
+
+Q.2) Write a program to search a specific location on Google Map.
+To write an Android application to search for a specific location on Google Maps, you
+can use the Google Maps SDK for Android provided by Google. Here's a basic example
+of how you can achieve this:
+1. Set up a new Android project in Android Studio.
+2. Add the Google Maps SDK to your project.
+3. Create a layout file for your activity with a search bar and a map fragment.
+4. Write Java code to handle user input, search for the location, and display it on the map.
+Here's a simplified version of the code:
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+public class MapsActivity extends AppCompatActivity implements
+OnMapReadyCallback {
+ private GoogleMap mMap;
+ private EditText searchEditText;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_maps);
+ searchEditText = findViewById(R.id.searchEditText);
+ SupportMapFragment mapFragment = (SupportMapFragment)
+getSupportFragmentManager()
+ .findFragmentById(R.id.map);
+ mapFragment.getMapAsync(this);
+ }
+ @Override
+ public void onMapReady(GoogleMap googleMap) {
+ mMap = googleMap;
+ // Set default location (e.g., city center)
+ LatLng defaultLocation = new LatLng(0, 0);
+ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
+10));
+ // Handle search button click
+ findViewById(R.id.searchButton).setOnClickListener(view -> {
+ String locationName = searchEditText.getText().toString().trim();
+ if (!locationName.isEmpty()) {
+ searchLocation(locationName);
+ } else {
+ Toast.makeText(this, "Please enter a location to search",
+Toast.LENGTH_SHORT).show();
+ }
+ });
+ }
+ private void searchLocation(String locationName) {
+ // Perform the search and update the map
+ // Here you can use Geocoding API or any other service to get the LatLng of
+the location
+ // For simplicity, this example just adds a marker at a fixed location LatLng searchedLocation = new LatLng(37.7749, -122.4194); // San
+Francisco, CA
+ mMap.clear(); // Clear previous markers
+ mMap.addMarker(new
+MarkerOptions().position(searchedLocation).title(locationName));
+ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(searchedLocation,
+15));
+ }
+}

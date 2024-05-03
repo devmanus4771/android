@@ -1,0 +1,145 @@
+Q.1) Construct image switcher using setFactory().
+1. Layout XML (activity_main.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:padding="16dp"
+ tools:context=".MainActivity">
+ <ImageSwitcher
+ android:id="@+id/imageSwitcher"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent" />
+ <Button
+ android:id="@+id/prevButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentBottom="true"
+ android:layout_alignParentStart="true"
+ android:onClick="prevImage"
+ android:text="Previous" />
+ <Button
+ android:id="@+id/nextButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentBottom="true"
+ android:layout_alignParentEnd="true"
+ android:onClick="nextImage"
+ android:text="Next" />
+</RelativeLayout>
+2. Java code (MainActivity.java):
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.ViewSwitcher;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private ImageSwitcher imageSwitcher;
+ private int[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3};
+ private int currentIndex = 0;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ imageSwitcher = findViewById(R.id.imageSwitcher);
+ imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+ @Override
+ public View makeView() {
+ ImageView imageView = new ImageView(getApplicationContext());
+ imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+ return imageView;
+ }
+ });
+ // Display the first image initially
+ imageSwitcher.setImageResource(images[currentIndex]);
+ }
+ public void nextImage(View view) {
+ if (currentIndex < images.length - 1) {
+ currentIndex++;
+ } else {
+ currentIndex = 0;
+ }
+ imageSwitcher.setImageResource(images[currentIndex]);
+ }
+ public void prevImage(View view) {
+ if (currentIndex > 0) {
+ currentIndex--;
+ } else {
+ currentIndex = images.length - 1;
+ }
+ imageSwitcher.setImageResource(images[currentIndex]);
+ }
+}
+
+
+
+---------------------2nd -----------------
+
+Q.2) Write a program to search a specific location on Google Map.
+To write an Android application to search for a specific location on Google Maps, you
+can use the Google Maps SDK for Android provided by Google. Here's a basic example
+of how you can achieve this:
+1. Set up a new Android project in Android Studio.
+2. Add the Google Maps SDK to your project.
+3. Create a layout file for your activity with a search bar and a map fragment.
+4. Write Java code to handle user input, search for the location, and display it on the map.
+Here's a simplified version of the code:
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+public class MapsActivity extends AppCompatActivity implements
+OnMapReadyCallback {
+ private GoogleMap mMap;
+ private EditText searchEditText;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_maps);
+ searchEditText = findViewById(R.id.searchEditText);
+ SupportMapFragment mapFragment = (SupportMapFragment)
+getSupportFragmentManager()
+ .findFragmentById(R.id.map);
+ mapFragment.getMapAsync(this);
+ }
+ @Override
+ public void onMapReady(GoogleMap googleMap) {
+ mMap = googleMap;
+ // Set default location (e.g., city center)
+ LatLng defaultLocation = new LatLng(0, 0);
+ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
+10));
+ // Handle search button click
+ findViewById(R.id.searchButton).setOnClickListener(view -> {
+ String locationName = searchEditText.getText().toString().trim();
+ if (!locationName.isEmpty()) {
+ searchLocation(locationName);
+ } else {
+ Toast.makeText(this, "Please enter a location to search",
+Toast.LENGTH_SHORT).show();
+ }
+ });
+ }
+ private void searchLocation(String locationName) {
+ // Perform the search and update the map
+ // Here you can use Geocoding API or any other service to get the LatLng of
+the location
+ // For simplicity, this example just adds a marker at a fixed location LatLng searchedLocation = new LatLng(37.7749, -122.4194); // San
+Francisco, CA
+ mMap.clear(); // Clear previous markers
+ mMap.addMarker(new
+MarkerOptions().position(searchedLocation).title(locationName));
+ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(searchedLocation,
+15));
+ }
+}

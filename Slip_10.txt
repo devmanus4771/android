@@ -1,0 +1,173 @@
+Q.1] Create an application that allows the user to enter a number in the textbox named
+getnum. Check whether the number in the textbox getnum is Armstrong or not. Print the
+message using Toast control when the user clicks on the button Check.
+XML layout file (activity_main.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <EditText
+ android:id="@+id/getnum"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter a number"
+ android:inputType="number" />
+ <Button
+ android:id="@+id/check"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/getnum"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="16dp"
+ android:text="Check" />
+</RelativeLayout>
+Java code (MainActivity.java):
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ final EditText getNumEditText = findViewById(R.id.getnum);
+ Button checkButton = findViewById(R.id.check);
+ checkButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String numStr = getNumEditText.getText().toString();
+ if (numStr.isEmpty()) {
+ showToast("Please enter a number.");
+ return;
+ }
+ int num = Integer.parseInt(numStr);
+ boolean result = isArmstrong(num);
+ if (result) {
+ showToast(num + " is an Armstrong number.");
+ } else {
+ showToast(num + " is not an Armstrong number.");
+ }
+ }
+ });
+ }
+ private boolean isArmstrong(int num) {
+ int sum = 0;
+ int temp = num;
+ int digits = String.valueOf(num).length();
+ while (temp != 0) {
+ int remainder = temp % 10;
+ sum += Math.pow(remainder, digits);
+ temp /= 10;
+ }
+ return num == sum;
+ }
+ private void showToast(String message) {
+ Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+ }
+}
+
+------------------------2n-----------------
+
+Q.2] Write a program to draw GUI by using Spinner, Buttons.
+below is the XML layout file (activity_main.xml) for the above Android application:
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <!-- Spinner -->
+ <Spinner
+ android:id="@+id/spinner"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="50dp" />
+ <!-- Button 1 -->
+ <Button
+ android:id="@+id/button1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/spinner"
+ android:layout_marginTop="20dp"
+ android:layout_marginStart="20dp"
+ android:text="Button 1" />
+ <!-- Button 2 -->
+ <Button
+ android:id="@+id/button2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@id/spinner"
+ android:layout_marginTop="20dp"
+ android:layout_marginEnd="20dp"
+ android:layout_alignParentEnd="true"
+ android:text="Button 2" />
+</RelativeLayout>
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ // Initialize Spinner
+ Spinner spinner = findViewById(R.id.spinner);
+ ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+R.array.spinner_items, android.R.layout.simple_spinner_item);
+ adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+ spinner.setAdapter(adapter);
+ // Initialize Buttons
+ Button button1 = findViewById(R.id.button1);
+ Button button2 = findViewById(R.id.button2);
+ // Set onClickListeners for Buttons
+ button1.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ // Action to perform when button1 is clicked
+ Toast.makeText(MainActivity.this, "Button 1 clicked",
+Toast.LENGTH_SHORT).show();
+ }
+ });
+ button2.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ // Action to perform when button2 is clicked
+ Toast.makeText(MainActivity.this, "Button 2 clicked",
+Toast.LENGTH_SHORT).show();
+ }
+ });
+ // Set onItemSelectedListener for Spinner
+ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+ @Override
+ public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+ // Action to perform when an item is selected in the Spinner
+ String selectedItem = parent.getItemAtPosition(position).toString();
+ Toast.makeText(MainActivity.this, "Selected: " + selectedItem,
+Toast.LENGTH_SHORT).show();
+ }
+ @Override
+ public void onNothingSelected(AdapterView<?> parent) {
+ // Do nothing
+ }
+ });
+ }
+}
+And in your res/values/strings.xml, define your spinner items as follows:
+<resources>
+ <string-array name="spinner_items">
+ <item>Item 1</item>
+ <item>Item 2</item>
+ <item>Item 3</item>
+ </string-array>
+</resources>
